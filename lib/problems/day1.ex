@@ -1,5 +1,7 @@
 defmodule Day1 do
   def replace_text(str) do
+    # Mega-hack due to realizing too late that "oneight" should
+    # turn into "18", not "1ight" due to reusing the overlapping "e"
     replacements = [
       {"zero", "0ero"},
       {"one", "1ne"},
@@ -15,21 +17,11 @@ defmodule Day1 do
 
     # Have an accumulator that we keep runnning all possible replacements on,
     # the accumulator starts like "", becomes "e", "ei", "eig"... "eight", "8", "8t"...
-    # IO.inspect str
     ret = List.foldl(String.graphemes(str), "", fn x, acc ->
-      # IO.inspect x
-      # buff = IO.inspect acc<>x
       buff = acc<>x
-      # Enum.each(replacements, fn {t, n} ->
-      #   ^buff = String.replace(buff, t, n)
-      # end)
       buff = Enum.reduce(replacements, buff, fn {t, n}, acc ->
-        # IO.inspect {t, n}
-        # {t, n} = IO.inspect Enum.at(replacements, 2)
         acc = String.replace(acc, t, n)
-        # IO.inspect acc
       end)
-      # IO.inspect buff
     end)
 
     IO.inspect {str, ret}
