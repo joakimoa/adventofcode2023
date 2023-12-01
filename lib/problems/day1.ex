@@ -19,8 +19,8 @@ defmodule Day1 do
     # the accumulator starts like "", becomes "e", "ei", "eig"... "eight", "8", "8t"...
     ret = List.foldl(String.graphemes(str), "", fn x, acc ->
       buff = acc<>x
-      buff = Enum.reduce(replacements, buff, fn {t, n}, acc ->
-        acc = String.replace(acc, t, n)
+      Enum.reduce(replacements, buff, fn {t, n}, acc ->
+        String.replace(acc, t, n)
       end)
     end)
 
