@@ -17,6 +17,38 @@ defmodule Day2 do
     n <= lim[color]
   end
 
+  def minimum_rgb(list) do
+    IO.inspect list
+    List.foldl(list, {0,0,0}, fn x, {r,g,b} ->
+      IO.inspect x
+      List.foldl(x, {r,g,b}, fn {num, color}, {ar,ag,ab} ->
+        ar = if (color == :red) and (num > ar), do: num, else: ar
+        ag = if (color == :green) and (num > ag), do: num, else: ag
+        ab = if (color == :blue) and (num > ab), do: num, else: ab
+        {ar, ag, ab}
+      end)
+    end)
+  end
+
+  def part_two() do
+    input = Util.load_input("./input/day2.txt")
+
+    score = input
+    |> Enum.map(& String.replace(&1, "Game ", ""))
+    |> Enum.map(& String.split(&1, [": ", "; "]))
+    |> Enum.map(& Enum.map(&1, fn x ->
+      y = String.split(x, ", ")
+      Enum.map(y, fn z -> n_color String.split(z, " ") end)
+    end))
+    |> Enum.map(fn [[a]|tail] -> [a|tail] end)
+    |> Enum.map(fn [_|grabs] -> minimum_rgb(grabs) end)
+    |> Enum.map(fn x ->
+      Enum.reduce(Tuple.to_list(x), fn y, acc -> y*acc end)
+    end)
+    |> Enum.sum()
+    IO.inspect score
+  end
+
   def part_one() do
     input = Util.load_input("./input/day2.txt")
 
