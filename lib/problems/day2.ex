@@ -18,9 +18,7 @@ defmodule Day2 do
   end
 
   def minimum_rgb(list) do
-    IO.inspect list
     List.foldl(list, {0,0,0}, fn x, {r,g,b} ->
-      IO.inspect x
       List.foldl(x, {r,g,b}, fn {num, color}, {ar,ag,ab} ->
         ar = if (color == :red) and (num > ar), do: num, else: ar
         ag = if (color == :green) and (num > ag), do: num, else: ag
