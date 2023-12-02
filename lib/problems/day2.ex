@@ -41,7 +41,8 @@ defmodule Day2 do
     |> Enum.map(fn [[a]|tail] -> [a|tail] end)
     |> Enum.map(fn [_|grabs] -> minimum_rgb(grabs) end)
     |> Enum.map(fn x ->
-      Enum.reduce(Tuple.to_list(x), fn y, acc -> y*acc end)
+      Tuple.product(x)
+      # Enum.reduce(Tuple.to_list(x), fn y, acc -> y*acc end)
     end)
     |> Enum.sum()
     IO.inspect score
